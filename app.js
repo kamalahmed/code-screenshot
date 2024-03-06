@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.post("/screenshot", upload.none(), async (req, res) => {
-  const code = req.body.code;
+  const code = req.body.code.trim();
   // escape HTML entities so that browser treats them as plain text
   const escapedHTML = code.replace(/&/g, '&amp;')
   .replace(/</g, '&lt;')
@@ -49,13 +49,15 @@ app.post("/screenshot", upload.none(), async (req, res) => {
     }
 
     pre {
-      padding: 30px 20px 20px;
-      background-color: #282c34;
-      border-radius: 10px;
       overflow: auto;
-      position: relative;
     }
-
+    .container {
+        border-radius: 10px;
+        overflow: auto;
+        background-color: #282c34;
+        padding: 30px 20px 20px;
+        position: relative;
+    }
     code {
       white-space: pre-wrap;
     }
@@ -88,14 +90,15 @@ app.post("/screenshot", upload.none(), async (req, res) => {
     </style>
   </head>
   <body>
-    <pre>
-        <div class="window-lights">
-            <div class="window-light w-red"></div>
-            <div class="window-light w-yellow"></div>
-            <div class="window-light w-green"></div>
+  <div class="container">
+    <div class="window-lights">
+        <div class="window-light w-red"></div>
+        <div class="window-light w-yellow"></div>
+        <div class="window-light w-green"></div>
         </div>
-        <code>${escapedHTML}</code>
-    </pre>
+    <pre><code>${escapedHTML}</code></pre>
+  </div>
+    
   </body>
 </html>
 `);
