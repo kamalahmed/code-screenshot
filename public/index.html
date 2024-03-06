@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Code Screenshot Generator</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/codemirror/lib/codemirror.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/codemirror/lib/codemirror.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror/mode/javascript/javascript.js"></script>
+  </head>
+  <body>
+    <h1>Code Screenshot Generator</h1>
+    <form action="/screenshot" method="POST" id="codeForm">
+      <div class="window-lights">
+        <div class="window-light w-red"></div>
+        <div class="window-light w-yellow"></div>
+        <div class="window-light w-green"></div>
+      </div>
+      <textarea
+        name="code"
+        id="codeInput"
+        rows="10"
+        placeholder="Enter your code here"
+      ></textarea>
+
+      <button type="submit">Generate Screenshot</button>
+    </form>
+    <script>
+      // auto resize the codeeditor window
+      document.addEventListener("DOMContentLoaded", function () {
+        const codeEditorContainer = document.getElementById("codeInput");
+
+        function autoResize() {
+          this.style.height = "auto";
+          this.style.height = this.scrollHeight + "px";
+        }
+
+        codeEditorContainer.addEventListener("input", autoResize, false);
+
+        // send the form for generatig screenshot
+        const codeForm = document.getElementById("codeForm");
+        const codeInput = document.getElementById("codeInput");
+
+        codeForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const formData = new FormData(codeForm);
+          formData.append("editorHeight", codeInput.clientHeight);
+          formData.append("editorWidth", codeInput.clientWidth);
+
+          //         for (let [key, value] of formData.entries()) {
+          //   console.log(`${key}: ${value}`); // check form value
+          // }
+
+          fetch("/screenshot", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "screenshot.png";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            })
+            .catch((error) => console.error(error));
+        });
+      });
+    </script>
+  </body>
+</html>

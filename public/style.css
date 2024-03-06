@@ -30,9 +30,10 @@ form {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
-  padding: 20px;
+  padding: 30px 20px 20px;
   width: 90%;
-  max-width: 500px;
+  max-width: 700px;
+  position: relative;
 }
 
 textarea {
@@ -58,7 +59,31 @@ button {
 button:hover {
   background-color: #5a7be6;
 }
+.window-lights {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+}
 
+.window-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.w-red {
+  background-color: #ff5f56;
+}
+
+.w-yellow {
+  background-color: #ffbd2e;
+}
+
+.w-green {
+  background-color: #27c93f;
+}
 /* Responsive adjustments */
 @media (max-width: 600px) {
   h1 {
@@ -76,5 +101,4 @@ button:hover {
   button {
     padding: 8px;
   }
-} 
-
+}
