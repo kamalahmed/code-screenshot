@@ -1,7 +1,9 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
+const multer = require('multer');
 
 const app = express();
+const upload = multer(); // for parsing multipart/form-data
 const port = 3000;
 
 // Set up EJS as the view engine
@@ -17,15 +19,22 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.post("/screenshot", async (req, res) => {
+app.post("/screenshot", upload.none(), async (req, res) => {
   const code = req.body.code;
+  const textareaHeight = parseInt(req.body.textareaHeight, 10);
+  const textareaWidth = parseInt(req.body.textareaWidth, 10);
+
+  console.log(textareaHeight);
+  console.log(textareaWidth);
 
   // Launch a new browser instance
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+    const width = textareaWidth? textareaWidth + 100 : 700;
+    const height = textareaHeight? textareaHeight + 100 : 500;
+  // Set the viewport based on the textarea dimensions
+  await page.setViewport({ width, height });
 
-  // Set the viewport to emulate a MacBook screen
-  await page.setViewport({ width: 800, height: 400 });
 
   // Load the code snippet template and set the code content
   await page.setContent(`
@@ -43,7 +52,6 @@ app.post("/screenshot", async (req, res) => {
           
           pre {
             background-color: #282c34;
-            padding: 20px;
             border-radius: 10px;
             overflow: auto;
             position: relative;
