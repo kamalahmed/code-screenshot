@@ -10,7 +10,9 @@ app.use(express.static('public'));
 
 // Parse request bodies
 app.use(express.urlencoded({ extended: true }));
-
+app.get('/', (req, res) => {
+    res.render('index');
+  });
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
