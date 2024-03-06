@@ -4,6 +4,7 @@
   "description": "This app will generate screenshot of code snippet for easy sharing.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
