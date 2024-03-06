@@ -1,0 +1,27 @@
+{
+  "name": "code-screenshot",
+  "version": "1.0.0",
+  "description": "This app will generate screenshot of code snippet for easy sharing.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "code",
+    "screenshot",
+    "snippet",
+    "code-screenshot",
+    "code-snippet"
+  ],
+  "author": "Kamal Ahmed",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.3",
+    "puppeteer": "^22.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
